@@ -40,7 +40,7 @@ A **register file** is a fast-access storage unit containing registers for tempo
 
 The **execution unit** includes a **full adder circuit** and an `add` signal.
 
-![Execution Unit Diagram](executionunit.png)
+![Execution Unit Diagram](./docs_new/executionunit.png)
 
 ### Operation
 
