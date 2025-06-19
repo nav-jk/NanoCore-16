@@ -17,11 +17,11 @@ A [minimal instruction set computer](https://en.wikipedia.org/wiki/Minimal_instr
 
 ### Architecture
 
-![Architecture Diagram](./docs/architecture.png)
+![Architecture Diagram](./docs_new/architecture.png)
 
 ### Instruction Set
 
-See [Instruction Set Documentation](./docs/instructions.md).
+See [Instruction Set Documentation](./docs_new/instructions.md).
 
 ## Register File
 
@@ -50,7 +50,7 @@ The **execution unit** includes a **full adder circuit** and an `add` signal.
 
 ## Decoder Unit
 
-![Decoder Unit Diagram](decoder.png)
+![Decoder Unit Diagram](./docs_new/decoder.png)
 
 The **decoder unit** interprets the 16-bit instruction and routes signals accordingly.
 
@@ -70,7 +70,7 @@ The **decoder unit** interprets the 16-bit instruction and routes signals accord
 
 The **fetch block** retrieves instructions and manages control flow.
 
-![Fetch Block Diagram](fetch.png)
+![Fetch Block Diagram](./docs_new/fetch.png)
 
 ### Inputs
 
@@ -86,7 +86,7 @@ The counter only loads the address when a **jump** instruction is active.
 
 The **assembler** constructs 32-bit instruction words from individual components.
 
-![Assembler Diagram](assembler.png)
+![Assembler Diagram](./docs_new/assembler.png)
 
 ### Functionality
 
