@@ -1,114 +1,37 @@
-# 16-Bit RISC CPU with 32 Instructions
+#  NanoCore-16: A 16-bit RISC CPU Built from First Principles
 
-A 16-bit RISC CPU with 32 instructions, built with [Digital](https://github.com/hneemann/Digital).
+**NanoCore-16** is a fully functional, 16-bit RISC-style CPU designed and implemented from scratch using only logic-level components — **without Verilog or HDL**. Built in the **Digital** logic simulation environment, this project replicates the fundamental design of a real processor by manually wiring the datapath, control logic, ALU, register file, memory, and instruction decoder.
 
-## Description
+---
 
-This CPU is built from scratch using a digital circuit simulator called [Digital](https://github.com/hneemann/Digital). The design can be exported to Verilog or VHDL, which allows it to be synthesized into a digital circuit suitable for deployment on an [FPGA](https://en.wikipedia.org/wiki/Field-programmable_gate_array).
+##  Features
 
-## Design
+- **16-bit wide architecture**
+- **4 general-purpose registers** (`R0`–`R3`)
+- **Instruction support:**
+  - Arithmetic: `ADD`, `SUB`
+  - Logic: `AND`, `OR`, `XOR`
+  - Data movement: `MOVE`, `LOAD`
+  - Control flow: `JUMP`, `BEQ` (branch if equal)
+- **Custom instruction set architecture (ISA)** with immediate and register modes
+- **Manual instruction encoding** using [CustomASM](https://github.com/HLorenzi/customasm)
+- **ROM/RAM-based program memory**
+- **Program counter (PC)** supports 16 instructions (`PC = 0–15`)
 
-A [minimal instruction set computer](https://en.wikipedia.org/wiki/Minimal_instruction_set_computer) architecture featuring exactly 32 instructions.
+---
 
-- RISC instruction set with a Harvard memory architecture.
-- Separate program and data memory.
-- Two pipeline stages: fetch and execute.
-- Designed for ice40 FPGAs using an open-source toolchain.
+##  Verilog Port Under Development
 
-### Architecture
+A hardware description language (HDL) implementation of **NanoCore-16 in Verilog** is currently in progress. This port will reproduce the same architecture and instruction set, enabling simulation in tools like **ModelSim** or deployment to **FPGAs**.
 
-![Architecture Diagram](./docs_new/architecture.png)
+---
 
-### Instruction Set
+##  Educational Value
 
-See [Instruction Set Documentation](./docs_new/instructions.md).
+NanoCore-16 was built to:
 
-## Register File
+- Deepen understanding of computer architecture
+- Simulate the behavior of a low-level CPU without using HDL
+- Showcase system-level design thinking and digital logic fluency
 
-A **register file** is a fast-access storage unit containing registers for temporary data during instruction execution. It works closely with the **Arithmetic Logic Unit (ALU)**.
-
-![Register File Diagra](./docs_new/architecture.png)
-
-### Functionality
-
-- Each register file has a **register destination (rd)** connected to the **Program Counter (PC)**.
-- The **execution unit** output (result signal) is fed into a **multiplexer** controlled by `rd`.
-- `rd` also goes into a **decoder**, which enables the correct register based on its value.
-- A second multiplexer, controlled by **register source (rs)**, reads data from the selected register.
-
-## Execution Unit
-
-The **execution unit** includes a **full adder circuit** and an `add` signal.
-
-![Execution Unit Diagram](./docs_new/executionunit.png)
-
-### Operation
-
-- `add` acts as a **select line** for a multiplexer.
-- When `add = 1`, the multiplexer selects the adder output for addition.
-- When `add = 0`, the multiplexer outputs the value of **input B** directly.
-
-## Decoder Unit
-
-![Decoder Unit Diagram](./docs_new/decoder.png)
-
-The **decoder unit** interprets the 16-bit instruction and routes signals accordingly.
-
-### Instruction Breakdown
-
-- **Bits 0–15**: Operand (**A**)
-- **Bits 16–17**: Destination register (**rd**)
-- **Bits 20–21**: Source register (**rs**)
-- **Bits 24–26**: Instruction code
-
-### Decoding Logic
-
-- `000` → Execute **add**
-- `111` → Execute **jump**
-
-## Fetch Block
-
-The **fetch block** retrieves instructions and manages control flow.
-
-![Fetch Block Diagram](./docs_new/fetch.png)
-
-### Inputs
-
-- **instruction**: Retrieved from **EEPROM**
-- **bypass**: Bypasses EEPROM if programming mode is enabled
-- **prog**: Selects between `bypass` and `instruction`
-- **address**: Loads the **Program Counter (PC)** during a jump
-- **jump**: Triggers PC load
-
-The counter only loads the address when a **jump** instruction is active.
-
-## Assembler
-
-The **assembler** constructs 32-bit instruction words from individual components.
-
-![Assembler Diagram](./docs_new/assembler.png)
-
-### Functionality
-
-- Supports instructions such as **add** and **jump**
-- Uses a **priority encoder** to select the active instruction
-- Outputs instructions to **EEPROM**
-- Programming mode (`mode`) enables the write clock signal
-
-## Graphics Hardware
-
-A retro **Video Display Processor (VDP)** circuit is included, compatible with DVI over HDMI using a PMOD. Inspired by late 1980s graphics systems like the Commodore 64, Amiga, and early Nintendo/Sega consoles.
-
-## Status
-
-- Complete arithmetic and logic instruction set
-- Capable of executing most programs
-
-## Building and Running
-
-- For simulation, open `dig/frontpanel.dig` in [Digital](https://github.com/hneemann/Digital)
-- For Verilog, see the [HDL documentation](./hdl/README.md)
-
-## Acknowledgments
-
-- [rj45](https://github.com/rj54)
+---
